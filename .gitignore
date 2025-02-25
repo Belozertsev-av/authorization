@@ -1,0 +1,77 @@
+# Логи
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Директории зависимостей
+/node_modules
+*/node_modules
+
+# Скомпилированные файлы
+/dist
+*/dist
+/build
+*/build
+/dist-ssr
+
+# Тесты и покрытие
+/coverage
+*/coverage
+/.nyc_output
+
+# Операционные системы
+.DS_Store
+
+# IDE и редакторы
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Файлы окружения
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# Временные файлы
+.temp
+.tmp
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Диагностические отчеты
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Cypress (если используется)
+/cypress/videos/
+/cypress/screenshots/
+
+# Дополнительные файлы редакторов
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# TypeScript build info
+*.tsbuildinfo
