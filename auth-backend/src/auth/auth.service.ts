@@ -10,7 +10,7 @@ import { JwtService } from "@nestjs/jwt"
 import { LoginCredentials, Payload } from "/~/auth/auth.types"
 import { RedisService } from "/~/redis/redis.service"
 import { Response as ResponseType } from "express"
-import * as bcrypt from "bcrypt"
+import * as argon2 from "argon2"
 
 @Injectable()
 export class AuthService {
@@ -26,15 +26,18 @@ export class AuthService {
     credentials: LoginCredentials,
     @Response({ passthrough: true }) res: ResponseType,
   ): Promise<{ accessToken: string }> {
-    const user = await this.usersService.getUser(credentials.login)
+    const user = await this.usersService.getUser({
+      login: credentials.login,
+      tabel: credentials.tabel,
+    })
     if (!user) {
       this.logger.warn(`User with login ${credentials.login} not found`)
       throw new UnauthorizedException("Invalid credentials")
     }
 
-    const isPasswordValid = await bcrypt.compare(
-      credentials.password,
+    const isPasswordValid = await argon2.verify(
       user.password,
+      credentials.password,
     )
     if (!isPasswordValid) {
       this.logger.warn(`Invalid password for user ${credentials.login}`)
@@ -85,7 +88,7 @@ export class AuthService {
       throw new UnauthorizedException("Invalid refresh token")
     }
 
-    const user = await this.usersService.getUser(login)
+    const user = await this.usersService.getUser({ login })
 
     if (!user) {
       this.logger.warn(`User with login ${login} not found during refresh`)

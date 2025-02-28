@@ -6,7 +6,8 @@ import {
 } from "@nestjs/common"
 import { Repositories } from "/~/constants"
 import { User } from "/~/users/user.entity"
-import * as bcrypt from "bcrypt"
+import * as argon2 from "argon2"
+import { WhereOptions } from "sequelize"
 
 @Injectable()
 export class UsersService {
@@ -15,10 +16,12 @@ export class UsersService {
     private userRepository: typeof User,
   ) {}
 
-  async getUser(login: string): Promise<User | null> {
-    return this.userRepository.findOne({
-      where: { login },
-    })
+  async getUser(where: WhereOptions<User>): Promise<User | null> {
+    return (
+      await this.userRepository.findOne({
+        where,
+      })
+    )?.dataValues as User | null
   }
 
   async createUser(userData: Partial<User>): Promise<User> {
@@ -40,7 +43,7 @@ export class UsersService {
     }
 
     // Хеширование пароля
-    const hashedPassword = await bcrypt.hash(password!, 10)
+    const hashedPassword = await argon2.hash(password!)
     const newUser = await this.userRepository.create({
       ...userData,
       password: hashedPassword,
@@ -50,13 +53,13 @@ export class UsersService {
   }
 
   async updateUser(login: string, userData: Partial<User>): Promise<User> {
-    const user = await this.getUser(login)
+    const user = await this.getUser({ login })
     if (!user) {
       throw new NotFoundException("User not found")
     }
 
     if (userData.password) {
-      userData.password = await bcrypt.hash(userData.password, 10)
+      userData.password = await argon2.hash(userData.password)
     }
 
     await user.update(userData)
@@ -64,7 +67,7 @@ export class UsersService {
   }
 
   async deleteUser(login: string): Promise<void> {
-    const user = await this.getUser(login)
+    const user = await this.getUser({ login })
     if (!user) {
       throw new NotFoundException("User not found")
     }

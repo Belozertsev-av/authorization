@@ -20,7 +20,7 @@ export class UsersController {
   @Public()
   @Get(":login")
   async getUser(@Param("login") login: string) {
-    const user = await this.usersService.getUser(login)
+    const user = await this.usersService.getUser({ login })
     if (!user) {
       throw new NotFoundException("User not found")
     }

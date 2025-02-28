@@ -6,15 +6,15 @@ export class User extends Model {
   @Unique
   @IsNotEmpty()
   @Column
-  login: string
+  declare login: string
 
   @Unique
   @IsNotEmpty()
   @Column
-  tabel: number
+  declare tabel: number
 
   @IsNotEmpty()
   @MinLength(6)
   @Column
-  password: string
+  declare password: string
 }

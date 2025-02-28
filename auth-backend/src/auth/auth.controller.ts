@@ -35,12 +35,7 @@ export class AuthController {
     @Body() credentials: LoginCredentials,
     @Res() res: ResponseType,
   ) {
-    try {
-      return await this.authService.signIn(credentials, res)
-    } catch (error) {
-      this.logger.error(`Login failed: ${error.message}`)
-      throw new UnauthorizedException("Invalid credentials")
-    }
+    return await this.authService.signIn(credentials, res)
   }
 
   @UseGuards(AuthGuard)
@@ -58,13 +53,8 @@ export class AuthController {
       throw new UnauthorizedException("No refresh token provided")
     }
 
-    try {
-      const decoded = this.authService.decodeToken(refreshToken) as Payload
-      return this.authService.refreshToken(decoded.login, refreshToken, res)
-    } catch (error) {
-      this.logger.error(`Refresh token failed: ${error.message}`)
-      throw new UnauthorizedException("Invalid refresh token")
-    }
+    const decoded = this.authService.decodeToken(refreshToken) as Payload
+    return this.authService.refreshToken(decoded.login, refreshToken, res)
   }
 
   @UseGuards(AuthGuard)
@@ -78,13 +68,8 @@ export class AuthController {
       throw new UnauthorizedException("No refresh token provided")
     }
 
-    try {
-      const decoded = this.authService.decodeToken(refreshToken) as Payload
-      await this.authService.invalidateRefreshToken(decoded.login)
-      return { message: "Logged out successfully" }
-    } catch (error) {
-      this.logger.error(`Logout failed: ${error.message}`)
-      throw new UnauthorizedException("Logout failed")
-    }
+    const decoded = this.authService.decodeToken(refreshToken) as Payload
+    await this.authService.invalidateRefreshToken(decoded.login)
+    return { message: "Logged out successfully" }
   }
 }

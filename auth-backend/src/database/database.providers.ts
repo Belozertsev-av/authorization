@@ -16,6 +16,7 @@ export const databaseProviders = [
         database: configService.get<string>("DATABASE_NAME"),
       })
       sequelize.addModels([User])
+      // await sequelize.authenticate()
       await sequelize.sync()
       return sequelize
     },
