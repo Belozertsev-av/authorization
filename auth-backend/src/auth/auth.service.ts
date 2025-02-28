@@ -11,6 +11,7 @@ import { LoginCredentials, Payload } from "/~/auth/auth.types"
 import { RedisService } from "/~/redis/redis.service"
 import { Response as ResponseType } from "express"
 import * as argon2 from "argon2"
+import { User } from "/~/users/user.entity"
 
 @Injectable()
 export class AuthService {
@@ -36,7 +37,7 @@ export class AuthService {
     }
 
     const isPasswordValid = await argon2.verify(
-      user.password,
+      (user.dataValues as User).password,
       credentials.password,
     )
     if (!isPasswordValid) {
@@ -45,7 +46,7 @@ export class AuthService {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, ...rest } = user
+    const { password, ...rest } = user.dataValues as User
     const payload = rest as Payload
 
     return await this.generateTokens(payload, res)
@@ -96,7 +97,7 @@ export class AuthService {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, ...rest } = user
+    const { password, ...rest } = user.dataValues as User
     const payload = rest as Payload
 
     return await this.generateTokens(payload, res)

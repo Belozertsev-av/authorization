@@ -18,13 +18,15 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Public()
+  @Get()
+  async getAllUsers() {
+    return await this.usersService.getAllUsers()
+  }
+
+  @Public()
   @Get(":login")
   async getUser(@Param("login") login: string) {
-    const user = await this.usersService.getUser({ login })
-    if (!user) {
-      throw new NotFoundException("User not found")
-    }
-    return user
+    return await this.usersService.getUserByLogin(login)
   }
 
   @Public()
