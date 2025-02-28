@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # NestJS приложение
   auth-backend:
@@ -29,6 +27,20 @@ services:
         limits:
           cpus: '1'
           memory: 512M
+
+  # VueJS приложение
+  auth-frontend:
+    build:
+      context: ./auth-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    env_file:
+      - .env
+    depends_on:
+      - auth-backend
+    networks:
+      - app-network
 
   # Redis
   auth-redis:
