@@ -1,0 +1,29 @@
+{
+  "plugins": [
+    "stylelint-order",
+    "stylelint-scss"
+  ],
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-recess-order",
+    "stylelint-config-standard-scss"
+  ],
+  "rules": {
+    "at-rule-no-unknown": null,
+    "selector-class-pattern": null,
+    "value-no-vendor-prefix": null,
+    "declaration-block-no-redundant-longhand-properties": null,
+    "selector-pseudo-element-no-unknown": [
+      true,
+      {
+        "ignorePseudoElements": ["v-deep" ]
+      }
+    ],
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": ["global", "deep" ]
+      }
+    ]
+  }
+}

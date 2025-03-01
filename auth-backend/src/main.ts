@@ -8,6 +8,13 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   app.useGlobalPipes(new ValidationPipe())
   app.use(cookieParser())
-  await app.listen(process.env.APP_PORT ?? 3000)
+  app.setGlobalPrefix("api")
+  // CORS для доступа с фронтенда
+  app.enableCors({
+    origin: process.env.BACKEND_PORT,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+  })
+  await app.listen(process.env.BACKEND_PORT ?? 3000)
 }
 void bootstrap()

@@ -1,44 +1,66 @@
-// eslint.config.mjs
-import eslint from '@eslint/js';
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
-import globals from 'globals';
-import tseslint from 'typescript-eslint';
+import globals from "globals"
+import pluginJs from "@eslint/js"
+import tseslint from "typescript-eslint"
+import pluginVue from "eslint-plugin-vue"
+import prettierConfig from "eslint-config-prettier"
+import prettierPlugin from "eslint-plugin-prettier"
 
-export default tseslint.config(
+export default [
+  { files: ["**/*.{js,mjs,cjs,ts,vue}"] },
+  { languageOptions: { globals: globals.browser } },
+  pluginJs.configs.recommended,
+  ...tseslint.configs.recommended,
+  ...pluginVue.configs["flat/essential"],
   {
-    ignores: ['eslint.config.mjs'],
-  },
-  eslint.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
-  eslintPluginPrettierRecommended,
-  {
+    files: ["**/*.vue"],
     languageOptions: {
-      globals: {
-        ...globals.node,
-        ...globals.jest,
-      },
-      ecmaVersion: 5,
-      sourceType: 'module',
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: import.meta.dirname,
-      },
-    },
-    settings: {
-      'import/resolver': {
-        typescript: {
-          alwaysTryTypes: true,
-          project: './tsconfig.json',
-        },
-      },
+      parserOptions: { parser: tseslint.parser },
     },
   },
+  prettierConfig,
   {
+    files: ["**/*.{js,mjs,cjs,ts,vue}"],
+    plugins: {
+      prettier: prettierPlugin,
+    },
     rules: {
-      '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-floating-promises': 'warn',
-      '@typescript-eslint/no-unsafe-argument': 'warn',
-      '@typescript-eslint/no-unused-vars': 'warn',
+      "prettier/prettier": [
+        "error",
+        // prettier config
+        {
+          semi: false,
+          singleAttributePerLine: true,
+          trailingComma: "all",
+          bracketSpacing: true,
+          endOfLine: "auto",
+        },
+        {
+          usePrettierrc: true,
+        },
+      ],
+      "vue/multi-word-component-names": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-empty-object-type": "off",
+      curly: ["warn", "all"],
+      "vue/attributes-order": [
+        "error",
+        {
+          order: [
+            "DEFINITION", // is, v-is
+            "LIST_RENDERING", // v-for item in items
+            "CONDITIONALS", // v-if, v-else-if, v-else, v-show, v-cloak
+            "RENDER_MODIFIERS", // v-pre, v-once
+            "GLOBAL", // id
+            "UNIQUE", // ref, key, slot
+            "TWO_WAY_BINDING", // v-model
+            "OTHER_DIRECTIVES", // v-custom-directive
+            "OTHER_ATTR", // class, style
+            "EVENTS", // @click="functionCall"
+            "CONTENT", // v-text, v-html
+          ],
+          alphabetical: false,
+        },
+      ],
     },
   },
-);
+]

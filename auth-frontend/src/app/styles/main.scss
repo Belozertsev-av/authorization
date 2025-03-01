@@ -1,0 +1,19 @@
+@use "nullstyle" as *;
+@use "modifiers" as modifiers;
+
+body, #app, .wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 12pt;
+}
+
+.container {
+  position: relative;
+  width: 1170px;
+  padding: 0 15px;
+  margin: 0 auto;
+}

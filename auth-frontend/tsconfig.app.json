@@ -4,9 +4,16 @@
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-
+    "verbatimModuleSyntax": false,
+    "target": "es2017",
+    "module": "esnext",
     "paths": {
-      "@/*": ["./src/*"]
-    }
+      "/~/*": ["src/*"]
+    },
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable"
+    ]
   }
 }

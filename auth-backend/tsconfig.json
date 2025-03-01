@@ -13,7 +13,7 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      "/~/*": ["src/*"] // Алиас @ для директории src
+      "/~/*": ["src/*"]
     },
     "incremental": true,
     "skipLibCheck": true,
