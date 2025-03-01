@@ -1,11 +1,14 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
 
 const Login = () => import("/~/pages/login/ui/login.vue")
-const Main = () => import("/~/pages/main/ui/main.vue")
+const Accounts = () => import("/~/pages/accounts/ui/accounts.vue")
 
-export type RouteName = "login" | "main"
+export enum RouteName {
+  Login = "login",
+  Accounts = "accounts",
+}
 
-enum Role {
+export enum Role {
   User = "USER",
   Admin = "ADMIN",
 }
@@ -20,14 +23,14 @@ export type RouteInfo = RouteRecordRaw & {
 export const routes: Array<RouteInfo> = [
   {
     path: "/",
-    name: "login",
+    name: RouteName.Login,
     component: Login,
     meta: { requiresAnyOfRoles: [] },
   },
   {
-    path: "/main",
-    name: "main",
-    component: Main,
+    path: "/accounts",
+    name: RouteName.Accounts,
+    component: Accounts,
     meta: { requiresAnyOfRoles: [Role.User, Role.Admin] },
   },
 ]

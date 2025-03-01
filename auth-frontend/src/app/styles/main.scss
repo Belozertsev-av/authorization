@@ -1,19 +1,56 @@
 @use "nullstyle" as *;
-@use "modifiers" as modifiers;
+@use "_fonts.css" as *;
 
-body, #app, .wrapper {
+:root {
+  --fs-body: 16px;
+  --fs-body-large: 18px;
+  --fs-subtitle: 20px;
+  --fs-subtitle-large: 24px;
+  --fs-title: 30px;
+  --fs-title-large: 40px;
+  --b-radius-small: 5px;
+  --b-radius-medium: 12px;
+  --b-radius-large: 25px;
+  --c-primary: rgb(64 123 255 / 100%);
+  --c-secondary: rgb(119 166 255 / 100%);
+  --c-background: rgb(216 231 253 / 100%);
+  --c-secondary-background: rgb(255 255 255 / 100%);
+  --c-prrimary-outline: rgb(156 190 255 / 100%);
+  --c-secondary-outline: rgb(213 213 214 / 100%);
+  --c-hover: rgb(236 243 255 / 100%);
+  --c-font: rgb(0 0 0 / 100%);
+  --c-font-label: rgb(102 102 102 / 100%);
+  --c-font-placeholder: rgb(166 163 173 / 100%);
+  --card-gradient: linear-gradient(
+                  to top right,
+                  rgb(71 129 238 / 100%) 0%,
+                  rgb(117 163 251 / 100%) 50%,
+                  rgb(161 194 255 / 100%) 100%);
+  --c-font-on-card: rgb(255 255 255 / 100%);
+  --c-inactive: rgb(245 245 245 / 100%);
+  --c-font-inactive: rgb(117 125 138 / 100%);
+
+  font-family: Inter, sans-serif;
+  font-size: var(--fs-body);
+  color: var(--c-font);
+}
+
+body, #app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
+  background-color: var(--c-background);
 }
 
-body {
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  font-size: 12pt;
-}
-
-.container {
+.wrapper {
   position: relative;
-  width: 1170px;
-  padding: 0 15px;
-  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  height: 90%;
+  background-color: var(--c-secondary-background);
+  border-radius: var(--b-radius-large);
 }
