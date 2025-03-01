@@ -19,7 +19,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-type IconName = "chevron-left" | "check" | "add" | "visibility" | "visibility-off"
+import { IconName } from "/~/shared/ui"
 
 withDefaults(
   defineProps<{

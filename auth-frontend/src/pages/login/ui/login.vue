@@ -1,9 +1,7 @@
 <template>
   <div class="login">
     <div class="login__header">
-      <div class="login__header-left-block">
-        <a-icon icon="chevron-left" />
-      </div>
+      <div class="login__header-left-block"></div>
       <div class="login__header-right-block">
         <img
           src="/logo.webp"
@@ -16,8 +14,4 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { AIcon } from "/~/shared/ui/a-icon"
-</script>
-
-<style scoped></style>
+<script setup lang="ts"></script>

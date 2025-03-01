@@ -1,19 +1,19 @@
 @font-face {
-  font-family: "Inter";
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
   src:
           url("/~/shared/assets/fonts/Inter_18pt-Regular.woff2") format("woff2"),
           url("/~/shared/assets/fonts/Inter_18pt-Regular.woff") format("woff"),
           url("/~/shared/assets/fonts/Inter_18pt-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
 }
 
 @font-face {
   font-family: "Noto Sans Bold";
+  font-style: normal;
+  font-weight: bold;
   src:
           url("/~/shared/assets/fonts/Inter_18pt-Bold.woff2") format("woff2"),
           url("/~/shared/assets/fonts/Inter_18pt-Bold.woff") format("woff"),
           url("/~/shared/assets/fonts/Inter_18pt-Bold.ttf") format("truetype");
-  font-weight: bold;
-  font-style: normal;
 }

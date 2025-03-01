@@ -17,7 +17,9 @@
     "lint:postcss": "stylelint src --custom-syntax postcss-html",
     "lint:scss": "stylelint \"src/**/*.scss\"",
     "lint:css": "yarn lint:postcss & yarn lint:scss",
-    "lint:css:fix": "yarn lint:postcss --fix & yarn lint:scss --fix"
+    "lint:css:fix": "yarn lint:postcss --fix & yarn lint:scss --fix",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "axios": "^1.8.1",
@@ -27,9 +29,18 @@
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "8.2.0",
+    "@storybook/addon-essentials": "8.2.0",
+    "@storybook/addon-interactions": "8.2.0",
+    "@storybook/addon-links": "8.2.0",
+    "@storybook/blocks": "8.2.0",
+    "@storybook/test": "8.2.0",
+    "@storybook/vue3": "8.2.0",
+    "@storybook/vue3-vite": "8.2.0",
     "@tsconfig/node22": "^22.0.0",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^22.13.4",
+    "@types/storybook__vue": "^5.2.1",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vitest/eslint-plugin": "1.1.31",
     "@vue/eslint-config-prettier": "^10.2.0",
@@ -49,6 +60,7 @@
     "prettier": "^3.5.1",
     "sass": "^1.85.1",
     "sass-loader": "^16.0.5",
+    "storybook": "8.2.0",
     "stylelint": "16.14.1",
     "stylelint-config-recess-order": "5.1.1",
     "stylelint-config-standard": "36.0.1",
