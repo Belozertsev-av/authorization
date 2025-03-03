@@ -34,7 +34,7 @@ withDefaults(
 )
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .icon {
   line-height: 1;
   fill: currentcolor;

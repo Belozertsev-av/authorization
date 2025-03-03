@@ -15,6 +15,7 @@
   --c-primary-hover: rgb(64 123 255 / 100%);
   --c-background: rgb(216 231 253 / 100%);
   --c-secondary-background: rgb(255 255 255 / 100%);
+  --c-card-background: rgb(255 255 255 / 50%);
   --c-primary-outline: rgb(156 190 255 / 100%);
   --c-secondary-outline: rgb(213 213 214 / 100%);
   --c-focus: rgb(236 243 255 / 100%);
@@ -32,7 +33,7 @@
   --c-font-inactive: rgb(117 125 138 / 100%);
 
   font-family: Inter, sans-serif;
-  font-size: var(--fs-body);
+  font-size: var(--fs-body-large);
   color: var(--c-font);
 }
 
@@ -69,4 +70,18 @@ body, #app {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.2s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.2s ease-out;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-2rem);
 }
