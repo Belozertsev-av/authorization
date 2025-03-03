@@ -9,3 +9,16 @@
     border-radius: 3px;
   }
 }
+
+.circle {
+  width: 0.75rem;
+  height: 0.75rem;
+  cursor: pointer;
+  background-color: var(--c-inactive);
+  border-radius: 50%;
+}
+
+.circle-active {
+  cursor: default;
+  background-color: var(--c-primary);
+}

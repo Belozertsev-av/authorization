@@ -56,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import type { InputType, AIcon } from "/~/shared/ui"
+import { InputType, AIcon } from "/~/shared/ui"
 import { computed, ref } from "vue"
 import { debounce } from "/~/shared/utils"
 
