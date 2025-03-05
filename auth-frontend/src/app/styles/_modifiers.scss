@@ -29,3 +29,14 @@
   cursor: default;
   background-color: var(--c-primary);
 }
+
+.warning-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  font-size: var(--fs-body-large);
+  color: var(--c-font-error);
+  background-color: var(--c-error);
+  border-radius: var(--b-radius-small);
+}

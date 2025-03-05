@@ -2,8 +2,6 @@ import {
   Body,
   Controller,
   Get,
-  HttpCode,
-  HttpStatus,
   Post,
   Req,
   Request,
@@ -11,6 +9,8 @@ import {
   UnauthorizedException,
   UseGuards,
   Logger,
+  HttpCode,
+  HttpStatus,
 } from "@nestjs/common"
 import { AuthService } from "/~/auth/auth.service"
 import {
@@ -57,6 +57,7 @@ export class AuthController {
     return this.authService.refreshToken(decoded.login, refreshToken, res)
   }
 
+  @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard)
   @Post("logout")
   async logout(@Req() req: RequestType) {

@@ -1,22 +1,13 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
+import { RouteName } from "/~/shared/utils"
 
 const Login = () => import("/~/pages/login/ui/login.vue")
-const Accounts = () => import("/~/pages/accounts/ui/accounts.vue")
-
-export enum RouteName {
-  Login = "login",
-  Accounts = "accounts",
-}
-
-export enum Role {
-  User = "USER",
-  Admin = "ADMIN",
-}
+const Main = () => import("/~/pages/main/ui/main.vue")
 
 export type RouteInfo = RouteRecordRaw & {
   name?: RouteName
   meta: {
-    requiresAnyOfRoles: Role[]
+    requiresAuth: boolean
   }
 }
 
@@ -25,13 +16,17 @@ export const routes: Array<RouteInfo> = [
     path: "/",
     name: RouteName.Login,
     component: Login,
-    meta: { requiresAnyOfRoles: [] },
+    meta: {
+      requiresAuth: false,
+    },
   },
   {
-    path: "/accounts",
-    name: RouteName.Accounts,
-    component: Accounts,
-    meta: { requiresAnyOfRoles: [Role.User, Role.Admin] },
+    path: "/main",
+    name: RouteName.Main,
+    component: Main,
+    meta: {
+      requiresAuth: true,
+    },
   },
 ]
 
@@ -39,4 +34,16 @@ export const history = createWebHistory()
 export const router = createRouter({
   history,
   routes,
+})
+
+router.beforeEach((to, from, next) => {
+  const accessToken = localStorage.getItem("accessToken")
+
+  if (to.name == RouteName.Login && accessToken) {
+    next("/main")
+  } else if (to.meta.requiresAuth && !accessToken) {
+    next("/")
+  } else {
+    next()
+  }
 })

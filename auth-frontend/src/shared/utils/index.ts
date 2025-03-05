@@ -1,3 +1,5 @@
+export * from "./types"
+
 export const hasProperties = (obj: any): boolean => {
   if (typeof obj !== "object" || obj === null) {
     return false
@@ -70,4 +72,12 @@ export const deepCompare = (obj1: any, obj2: any, excludedProperty?: string): bo
     }
   }
   return true
+}
+
+export const getEnvVar = (key: string) => {
+  const envVar = import.meta.env[key]
+  if (envVar === undefined) {
+    throw new Error(`Env variable ${key} is required`)
+  }
+  return envVar
 }

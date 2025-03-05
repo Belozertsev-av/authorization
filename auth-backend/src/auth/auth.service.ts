@@ -4,6 +4,8 @@ import {
   Response,
   UnauthorizedException,
   Logger,
+  BadRequestException,
+  HttpStatus,
 } from "@nestjs/common"
 import { UsersService } from "/~/users/users.service"
 import { JwtService } from "@nestjs/jwt"
@@ -73,7 +75,7 @@ export class AuthService {
       httpOnly: true,
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 дней
     })
-    res.send({ accessToken })
+    res.status(HttpStatus.OK).send({ accessToken })
 
     return { accessToken }
   }
@@ -93,7 +95,7 @@ export class AuthService {
 
     if (!user) {
       this.logger.warn(`User with login ${login} not found during refresh`)
-      throw new NotFoundException()
+      throw new NotFoundException("User not found during refresh")
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

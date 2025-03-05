@@ -37,6 +37,8 @@ services:
       - "80:80"
     env_file:
       - .env
+    environment:
+      - VITE_BASE_API_URL={VITE_BASE_API_URL}
     depends_on:
       - auth-backend
     networks:

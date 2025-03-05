@@ -2,7 +2,7 @@
   <div class="profile">
     <div
       class="profile__header"
-      @click="isOpened = !isOpened"
+      @click="onOpenCard"
     >
       <div class="profile__avatar">
         <img
@@ -11,25 +11,36 @@
         />
       </div>
       <div class="profile__data">
-        <div class="profile__login">{{ form.login }}</div>
-        <div class="profile__tabel">{{ form.tabel }}</div>
+        <div class="profile__login">{{ userInfo.login }}</div>
+        <div class="profile__tabel">{{ userInfo.tabel }}</div>
       </div>
     </div>
     <transition-group name="slide-fade">
       <div
-        v-if="isOpened"
+        v-if="cardOpened"
         class="profile__divider"
       />
       <div
-        v-if="isOpened"
+        v-if="cardOpened"
         class="profile__body"
       >
         <a-input
-          v-model="form.password"
+          v-model="password"
           type="password"
           :label="t('password')"
         />
-        <a-button>{{ t("logIn") }}</a-button>
+        <a-button
+          :disabled="!password.trim()"
+          @click="login"
+        >
+          {{ t("logIn") }}
+        </a-button>
+        <div
+          v-if="errorMessage"
+          class="warning-card"
+        >
+          {{ t(errorMessage) }}
+        </div>
       </div>
     </transition-group>
   </div>
@@ -37,19 +48,53 @@
 
 <script setup lang="ts">
 import { AButton, AInput } from "/~/shared/ui"
-import { reactive, ref } from "vue"
+import { ref } from "vue"
 import { useI18n } from "vue-i18n"
+import { getUserInfo, logIn, UserInfo, useUserStore } from "/~/entities/users"
+import { RouteName } from "/~/shared/utils"
+import { useRouter } from "vue-router"
 
+const props = defineProps<{
+  userInfo: UserInfo
+  cardOpened: boolean
+}>()
+const emit = defineEmits<(e: "openCard", user: UserInfo) => void>()
+const errorMessage = ref<string>("")
+
+const userStore = useUserStore()
+const router = useRouter()
 const { t } = useI18n()
 
-const form = reactive({
-  tabel: "06",
-  login: "Иванов И.А",
-  password: "",
-  rememberAccount: false,
-})
+const password = ref<string>("")
 
-const isOpened = ref<boolean>(false)
+const login = async () => {
+  if (!password.value.trim()) {
+    return
+  }
+  try {
+    const response = await logIn({
+      tabel: props.userInfo.tabel,
+      login: props.userInfo.login,
+      password: password.value,
+    })
+    if (response) {
+      localStorage.setItem("accessToken", response.accessToken)
+      const user = await getUserInfo()
+      userStore.setUser(user)
+
+      await router.push({ name: RouteName.Main })
+    }
+  } catch (error) {
+    console.error((error as Error).message)
+    errorMessage.value = "errors.wrongPassword"
+  }
+}
+
+const onOpenCard = () => {
+  emit("openCard", props.userInfo)
+  password.value = ""
+  errorMessage.value = ""
+}
 </script>
 
 <style lang="scss" scoped>
@@ -57,14 +102,14 @@ const isOpened = ref<boolean>(false)
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 1rem;
+  padding: 0.75rem;
   background-color: var(--c-card-background);
   border-radius: var(--b-radius-medium);
   transition: height 0.2s;
 
   &__header {
     display: flex;
-    gap: 1rem;
+    gap: 0.75rem;
     align-items: center;
     cursor: pointer;
   }
@@ -92,14 +137,14 @@ const isOpened = ref<boolean>(false)
   &__divider {
     width: 100%;
     height: 1px;
-    margin: 1rem auto;
+    margin: 0.75rem auto;
     background-color: var(--c-primary);
   }
 
   &__body {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.75rem;
   }
 
   &__login {

@@ -11,7 +11,7 @@ async function bootstrap() {
   app.setGlobalPrefix("api")
   // CORS для доступа с фронтенда
   app.enableCors({
-    origin: process.env.BACKEND_PORT,
+    origin: [process.env.BASE_URL, "http://localhost:5173"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })

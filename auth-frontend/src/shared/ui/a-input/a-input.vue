@@ -61,13 +61,13 @@ import { computed, ref } from "vue"
 import { debounce } from "/~/shared/utils"
 
 const props = defineProps<{
-  modelValue: string
+  modelValue: string | number
   type: InputType
   label?: string
   options?: string[]
 }>()
 
-const emit = defineEmits<(e: "update:modelValue", modelValue: string) => void>()
+const emit = defineEmits<(e: "update:modelValue", modelValue: string | number) => void>()
 
 const isMenuOpened = ref<boolean>(false)
 const modelValue = computed(() => props.modelValue)
@@ -76,10 +76,10 @@ const isVisible = ref<boolean>(false)
 const inputArea = ref<HTMLElement | null>(null)
 
 const inputType = computed(() => {
-  if (props.type === "text") {
-    return props.type
-  } else {
+  if (props.type === "password") {
     return isVisible.value ? "text" : "password"
+  } else {
+    return props.type
   }
 })
 
@@ -141,6 +141,18 @@ const onInputHandler = debounce((event: Event) => {
     font-size: var(--fs-body);
     color: var(--c-font);
     background: none;
+
+    &[type="number"] {
+      appearance: none;
+      appearance: textfield;
+      appearance: textfield;
+    }
+
+    &[type="number"]::-webkit-outer-spin-button,
+    &[type="number"]::-webkit-inner-spin-button {
+      margin: 0;
+      appearance: none;
+    }
   }
 
   &__popup {

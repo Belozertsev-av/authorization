@@ -19,15 +19,15 @@ const { t } = useI18n()
 
 <style lang="scss" scoped>
 .add-card {
-  transition: 0.2s;
   display: flex;
   gap: 1rem;
   align-items: center;
-  cursor: pointer;
   width: 100%;
   padding: 1rem;
+  cursor: pointer;
   background-color: var(--c-card-background);
   border-radius: var(--b-radius-medium);
+  transition: 0.2s;
 
   &:active {
     transform: scale(0.98);
